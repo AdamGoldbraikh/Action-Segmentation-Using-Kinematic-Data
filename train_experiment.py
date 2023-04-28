@@ -31,6 +31,7 @@ parser.add_argument('--upload', default=False, type=bool)
 parser.add_argument('--num_epochs', default=40, type=int)
 parser.add_argument('--normalization', choices=['Standard', 'samplewise_SD', 'none'], default='samplewise_SD', type=str)
 parser.add_argument('--lefthanded_VTS', default=False, type=bool)
+parser.add_argument('--augmentation', choices=['none', 'wfr', 'hf', 'wfr+hf'], default='wfr+hf', type=str)
 
 args, unknown = parser.parse_known_args()
 
@@ -109,26 +110,22 @@ elif args.network == "MS-TCN-LSTM":
     parser.add_argument('--dropout_TCN', default=0.546245300839604, type=float)
     parser.add_argument('--dropout_RNN', default=0.618678009242687, type=float)
 
-
-
-
 args, unknown = parser.parse_known_args()
+
 augment_dict = {}
+if args.augmentation == "hf":
+    augment_dict = {"reflect":[0.5, 50]}
+if args.augmentation=="wfr":
+    augment_dict = {
+        "rotate_world": [7,1,False],
+    }
 
-# augment_dict = {"reflect":[0.5, 50]}
-#
-#
-# augment_dict = {
-#     "rotate_world": [7,1,False],
-# }
+if args.augmentation=="wfr+hf":
+    augment_dict = {
+        "rotate_world": [7,1,False],
+    "reflect":[0.5, 50]
+    }
 
-
-# augment_dict = {
-#     "rotate_world": [7,1,False],
-# "reflect":[0.5, 50]
-# }
-
-# augment_dict = {"reflect":[0.5, 50]}
 
 debagging = args.debagging
 if debagging:
@@ -188,7 +185,7 @@ secondary_sampling = args.secondary_sampling
 num_f_maps = args.num_f_maps
 experiment_name = args.group+" "+ args.dataset +" task-"  + args.task + " splits- " + args.split +" net- " + args.network +" norm- " +args.normalization +" seed- " + str(seed)
 if "rotate_world" in augment_dict:
-    experiment_name = experiment_name + " rotate- " + str(augment_dict["rotate_world"][0] ) + " probRot- "  + str(augment_dict["rotate_world"][1]) + " isExtrinsic- " + str(augment_dict["rotate_world"][2])
+    experiment_name = experiment_name + " rotate- " + str(augment_dict["rotate_world"][0] ) + " probRot- "  + str(augment_dict["rotate_world"][1])
 
 if "reflect" in augment_dict:
     experiment_name = experiment_name + " reflecProb- " + str(augment_dict["reflect"][0])
@@ -288,8 +285,6 @@ for split_num in list_of_splits:
                       secondary_sampling=secondary_sampling,
                       hyper_parameter_tuning=hyper_parameter_tuning,
                       debagging=debagging,ToPrint=ToPrint,dataset=args.dataset)
-    print(gt_path_gestures)
-
     batch_gen = BatchGenerator(num_classes_gestures,num_classes_tools, actions_dict_gestures,actions_dict_tools,features_path,split_num,folds_folder ,gt_path_gestures, "", "", sample_rate=sample_rate,normalization=args.normalization,task=args.task,augment_dict=augment_dict,left_handed=args.lefthanded_VTS,dataset=args.dataset)
     eval_dict ={"features_path":features_path,"actions_dict_gestures": actions_dict_gestures, "actions_dict_tools":actions_dict_tools, "device":device, "sample_rate":sample_rate,"eval_rate":eval_rate,
                 "gt_path_gestures":gt_path_gestures, "gt_path_tools_left":"", "gt_path_tools_right":"","task":args.task}
