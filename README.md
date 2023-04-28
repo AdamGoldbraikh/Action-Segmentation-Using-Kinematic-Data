@@ -4,7 +4,8 @@ This paper is currently under review.
 text text
 A PyTorch implementation of the paper [Kinematic Data-Based Action Segmentation for Surgical Applications](https://arxiv.org/pdf/2303.07814.pdf).
 
-![Sensors' Locations](figures/sensor_localization_v2.png)
+![Sensors' Locations](figs/datasets.PNG)
+![data sets](figs/Sensors_Locations.PNG)
 
 ## Install
 This implementation uses Python 3.6 and the following packages:
