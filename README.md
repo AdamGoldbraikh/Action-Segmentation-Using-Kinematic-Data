@@ -1,5 +1,6 @@
 # Kinematic Data-Based Action Segmentation for Surgical Applications
-This paper is currently under review.
+This manuscript is presently being reviewed by a peer-reviewed journal.
+
 
 A PyTorch implementation of the paper [Kinematic Data-Based Action Segmentation for Surgical Applications](https://arxiv.org/pdf/2303.07814.pdf).
 
