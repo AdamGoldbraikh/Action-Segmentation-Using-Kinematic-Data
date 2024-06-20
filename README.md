@@ -1,4 +1,4 @@
-# Kinematic Data-Based Action Segmentation for Surgical Applications
+# Action Segmentation Using Kinematic Data and Its Applications
 This manuscript is presently being reviewed by a peer-reviewed journal.
 
 
