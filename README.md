@@ -1,4 +1,4 @@
-# Action Segmentation Using Kinematic Data and Its Applications
+# Action Segmentation Using Kinematic Data
 This manuscript is presently being reviewed by a peer-reviewed journal.
 
 
